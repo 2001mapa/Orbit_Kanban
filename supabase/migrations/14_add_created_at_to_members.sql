@@ -1,0 +1,1 @@
+ALTER TABLE public.workspace_members ADD COLUMN created_at TIMESTAMPTZ DEFAULT NOW();

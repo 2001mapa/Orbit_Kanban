@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /workspace/
+Disallow: /api/
+Allow: /

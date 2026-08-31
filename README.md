@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛰️ Orbit
 
-## Getting Started
+![Orbit Banner](public/window.svg)
 
-First, run the development server:
+**Orbit** es un tablero Kanban colaborativo en tiempo real diseñado para equipos ágiles. A diferencia de un simple CRUD, Orbit está construido con patrones de arquitectura de nivel de producción, incluyendo sistemas distribuidos de bloqueo optimista, matemáticas de ordenamiento LexoRank y procesamiento de colas asíncronas.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Características Principales (Technical Highlights)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Colaboración en Tiempo Real (WebSockets):** Sincronización instantánea de tarjetas, columnas y estados de los usuarios mediante Supabase Realtime (Presence & Broadcast).
+- **Sistema de Bloqueo Distribuido Anti-Zombie:** Al arrastrar una tarjeta, se emite un \	ask_lock\ con latencia cero que bloquea visualmente la tarjeta para los demás. Los bloqueos de usuarios desconectados se limpian automáticamente (\purgeZombieLocks\).
+- **Motor de Ordenamiento LexoRank:** Usa el mismo algoritmo de ordenamiento fraccionario que Jira, evitando operaciones de reescritura O(n) al mover tareas. Incluye un trabajo CRON para rebalanceo automático.
+- **Arquitectura de Tareas Asíncronas (Fan-Out):** Un Vercel Cron dispara un productor que consulta la BD y encola mensajes criptográficamente firmados en **QStash** de Upstash. Un Worker Serverless (Idempotente) verifica la firma y procesa recordatorios por correo vía **Resend**.
+- **IA Integrada para Tareas por Voz:** Captura de audio procesada por OpenAI Whisper y estructurada a través de GPT-4o-mini con \esponse_format: json_object\ para crear tareas automáticamente.
+- **Autenticación y Seguridad (RLS):** Control de acceso basado en roles con Row Level Security a nivel de PostgreSQL, incluyendo vistas seguras (\security_invoker = true\).
+- **Modo Zen:** Vista sin distracciones que oculta la interfaz y fuerza los límites de **Work-In-Progress (WIP)**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Arquitectura del Sistema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js 16 (App Router), React, Tailwind CSS v4, Zustand, TanStack Query, Radix UI / Shadcn.
+- **Backend:** Next.js Server Actions & API Routes.
+- **Base de Datos & Auth:** Supabase (PostgreSQL, Auth, Realtime).
+- **Infraestructura de Cola:** Upstash QStash (Serverless Message Broker).
+- **Mailing:** Resend.
+- **Inteligencia Artificial:** OpenAI API (Whisper & GPT-4o).
 
-## Learn More
+## 🚀 Instalación y Despliegue Local
 
-To learn more about Next.js, take a look at the following resources:
+1. Clona este repositorio.
+2. Instala las dependencias:
+   \\\ash
+   npm install
+   \\\
+3. Copia el archivo de variables de entorno y configúralo con tus credenciales:
+   \\\ash
+   cp .env.example .env.local
+   \\\
+4. (Opcional) Si cuentas con la CLI de Supabase, puedes aplicar las migraciones a tu base de datos remota:
+   \\\ash
+   supabase link --project-ref <tu-project-ref>
+   supabase db push
+   \\\
+5. Inicia el servidor de desarrollo:
+   \\\ash
+   npm run dev
+   \\\
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧪 Testing y CI/CD
+El proyecto cuenta con validación estricta de TypeScript (\
+px tsc --noEmit\), linting (\ESLint\) y pruebas unitarias con **Vitest** para garantizar la integridad de las funciones matemáticas (LexoRank) y la lógica de estado global (Locks). Todo es validado automáticamente en cada push gracias a **GitHub Actions**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔒 Seguridad
+Se aplican las mejores prácticas HTTP a través de los \headers\ de Next.js (Content-Security-Policy, Strict-Transport-Security, X-Frame-Options) y seguridad estricta en base de datos.
