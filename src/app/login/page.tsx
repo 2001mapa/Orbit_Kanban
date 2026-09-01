@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
@@ -40,7 +42,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-[#F4F1EB] text-stone-800">
+    <div className="flex h-screen w-full items-center justify-center bg-[#F4F1EB] text-stone-800 relative">
+      <Link href="/" className="absolute top-8 left-8 flex items-center gap-2 text-stone-500 hover:text-teal-700 transition-colors font-medium">
+        <ArrowLeft className="w-4 h-4" />
+        Volver al inicio
+      </Link>
       <Card className="w-full max-w-md shadow-lg border-stone-200">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-serif font-bold tracking-tight">Bienvenido a Orbit</CardTitle>
