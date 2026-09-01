@@ -9,7 +9,8 @@ export type Task = {
   assigned_to: string | null;
   title: string;
   description?: string;
-  priority?: 'low' | 'medium' | 'high';
+  priority?: 'low' | 'medium' | 'high' | 'urgent';
+  tags?: string[];
   status: 'todo' | 'in_progress' | 'done';
   lexorank: string;
   last_updated: string;

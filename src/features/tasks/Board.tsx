@@ -284,11 +284,12 @@ export const Board = ({
         </div>
       </DragDropContext>
 
-      <EditTaskModal 
-        task={selectedTask} 
-        isOpen={!!selectedTask} 
-        onClose={() => setSelectedTask(null)} 
+      <EditTaskModal
+        task={selectedTask}
+        isOpen={!!selectedTask}
+        onClose={() => setSelectedTask(null)}
         workspaceId={workspaceId}
+        userMap={userMap}
       />
     </>
   );

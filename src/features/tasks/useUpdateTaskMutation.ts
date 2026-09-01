@@ -8,7 +8,7 @@ export function useUpdateTaskMutation(workspaceId: string) {
   const queryKey = ['tasks', workspaceId];
 
   return useMutation({
-    mutationFn: async ({ taskId, updates }: { taskId: string; updates: { title?: string; description?: string } }) => {
+    mutationFn: async ({ taskId, updates }: { taskId: string; updates: { title?: string; description?: string; priority?: 'low' | 'medium' | 'high' | 'urgent'; tags?: string[]; assigned_to?: string | null } }) => {
       const res = await updateTaskAction(taskId, workspaceId, updates);
       if (res.error) throw new Error(res.error);
       return res.task as Task;

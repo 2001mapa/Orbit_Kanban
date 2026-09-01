@@ -35,7 +35,7 @@ export async function processVoiceTask(formData: FormData, workspaceId: string) 
       messages: [
         { 
           role: "system", 
-          content: "Eres un product manager. Extrae la información del requerimiento a partir de la transcripción y devuelve ESTRICTAMENTE un JSON con: 'title' (string corto), 'description' (string detallado con viñetas), 'priority' ('low', 'medium', 'high')." 
+          content: "Eres un product manager. Extrae la información del requerimiento a partir de la transcripción y devuelve ESTRICTAMENTE un JSON con: 'title' (string corto), 'description' (string detallado con viñetas), 'priority' ('low', 'medium', 'high', 'urgent')." 
         },
         { 
           role: "user", 
@@ -86,6 +86,7 @@ export async function processVoiceTask(formData: FormData, workspaceId: string) 
       title: aiData.title || 'Tarea sin título',
       description: aiData.description || '',
       priority: aiData.priority || 'medium',
+      tags: ['Creada por IA'],
       status: 'todo',
       workspace_id: workspaceId,
       created_by: user.id,

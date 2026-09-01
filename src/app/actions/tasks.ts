@@ -104,7 +104,7 @@ export async function moveTaskAction(taskId: string, workspaceId: string, newSta
   return { success: true, task: data };
 }
 
-export async function updateTaskAction(taskId: string, workspaceId: string, updates: { title?: string; description?: string }) {
+export async function updateTaskAction(taskId: string, workspaceId: string, updates: { title?: string; description?: string; priority?: string; tags?: string[]; assigned_to?: string | null }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'No autorizado' };
