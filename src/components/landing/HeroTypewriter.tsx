@@ -70,15 +70,17 @@ export function HeroTypewriter() {
         }, 20);
       } else {
         setCursorPhase('done');
-        timeout = setTimeout(() => {
-          setShowBadge(true);
-          setTimeout(() => setIsExiting(true), 2500);
-        }, 200);
+      }
+    } else if (cursorPhase === 'done') {
+      if (!showBadge) {
+        timeout = setTimeout(() => setShowBadge(true), 200);
+      } else {
+        timeout = setTimeout(() => setIsExiting(true), 2500);
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [title, desc, cursorPhase, taskIndex, isExiting]);
+  }, [title, desc, cursorPhase, showBadge, taskIndex, isExiting]);
 
   const task = TASKS[taskIndex];
   
