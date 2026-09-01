@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { logoutAction } from '@/app/actions/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { LayoutDashboard, BarChart3, LogOut, Users, FolderKanban } from 'lucide-react'
@@ -84,7 +85,7 @@ export default async function WorkspaceLayout({
               </DropdownMenuGroup>
               <DropdownMenuSeparator className="bg-stone-100" />
               <DropdownMenuItem className="focus:bg-stone-100 cursor-pointer">
-                <form action="/auth/signout" method="post" className="w-full">
+                <form action={logoutAction} className="w-full">
                   <button type="submit" className="w-full text-left flex items-center text-stone-700">
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Cerrar sesión</span>

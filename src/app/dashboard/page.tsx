@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { logoutAction } from '@/app/actions/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { LogOut, Plus, FolderKanban } from 'lucide-react';
@@ -60,7 +61,7 @@ export default async function DashboardPage() {
               {initial}
             </AvatarFallback>
           </Avatar>
-          <form action="/auth/signout" method="post">
+          <form action={logoutAction}>
             <button type="submit" className="text-stone-500 hover:text-stone-800 p-2 rounded-md hover:bg-stone-100 transition-colors">
               <LogOut className="h-5 w-5" />
             </button>
