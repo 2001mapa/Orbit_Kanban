@@ -12,7 +12,7 @@ export function HeroTypewriter() {
   const fullDesc = "Usar Whisper para transcribir reuniones y crear tareas automáticamente.";
 
   useEffect(() => {
-    let timeout;
+    let timeout: NodeJS.Timeout | undefined;
     if (cursorPhase === 'title') {
       if (title.length < fullTitle.length) {
         timeout = setTimeout(() => {
