@@ -35,7 +35,8 @@ export default function LoginPage() {
         if (res?.error) {
           setError(res.error)
         }
-      } catch (err) {
+      } catch (err: any) {
+        if (err?.message?.includes('NEXT_REDIRECT')) return;
         setError('Ocurrió un error de conexión.')
       }
     })
