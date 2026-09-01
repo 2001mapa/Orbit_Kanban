@@ -1,4 +1,3 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 
@@ -6,10 +5,10 @@ export function HeroTypewriter() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [showBadge, setShowBadge] = useState(false);
-  const [cursorPhase, setCursorPhase] = useState('title'); // 'title', 'desc', 'done'
+  const [cursorPhase, setCursorPhase] = useState('title');
 
-  const fullTitle = "Integrar IA con el equipo de diseño";
-  const fullDesc = "Usar Whisper para transcribir reuniones y crear tareas automáticamente.";
+  const fullTitle = 'Diseñar la nueva interfaz web';
+  const fullDesc = 'Llamar a los clientes y estructurar las prioridades de esta semana de forma automática.';
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
